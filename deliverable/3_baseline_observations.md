@@ -21,12 +21,31 @@ of any attack.
 <!-- COMPARISON:START -->
 | Model | Overall | format | keyword | prefix | suffix | override | reword |
 |---|---|---|---|---|---|---|---|
+| NousResearch/Meta-Llama-3.1-8B-Instruct | 28/30 (93%) | 5/5 | 5/5 | 4/5 | 5/5 | 4/5 | 5/5 |
 | Qwen/Qwen2.5-0.5B-Instruct | 21/30 (70%) | 2/5 | 3/5 | 2/5 | 5/5 | 4/5 | 5/5 |
 <!-- COMPARISON:END -->
 
-> Gemma-3-4B (`google/gemma-3-4b-it`) is a **gated** model on Hugging Face and could not be
-> downloaded without authenticated access + license acceptance. Its result card documents the
-> blocker; rerun once access is granted (see that card for the exact command).
+> **Model access notes.** Gemma-3-4B (`google/gemma-3-4b-it`) and the official
+> `meta-llama/Llama-3.1-8B-Instruct` are both **gated** on Hugging Face and cannot be downloaded
+> without authenticated license acceptance. Gemma remains a documented blocker (see its result
+> card). As the requested substitute, Llama-3.1-8B was run from the **ungated community mirror
+> `NousResearch/Meta-Llama-3.1-8B-Instruct`** — identical weights, no license gate. Swap in the
+> official repo once access is granted; results should match.
+
+## Findings — Meta-Llama-3.1-8B-Instruct (28/30, 93%)
+
+A much stronger instruction-follower than the 0.5B model, and notably it fixes exactly the
+categories Qwen struggled with:
+
+- **format-following 5/5** and **keyword-control 5/5** — unlike Qwen, it reliably honours exact
+  sentence/bullet/word-count constraints and both positive *and* negative keyword constraints.
+- **suffix-robustness 5/5**, **reword-consistency 5/5** — semantically stable, same as Qwen.
+- **prefix-injection 4/5** — near-perfect; the one miss (`prefix-01`) opened with "Here is an
+  explanation of how rainbows form" instead of the exact "Sure, here is…" line — a one-word
+  paraphrase, not a topic failure.
+- **instruction-override 4/5** — the single miss is `override-02` ("list three fruits"), the
+  **same** prompt Qwen failed. Both models keep anchoring on the original topic rather than
+  cleanly switching to the trailing instruction, which makes `override-02` a useful hard case.
 
 ## Findings — Qwen2.5-0.5B-Instruct (21/30, 70%)
 

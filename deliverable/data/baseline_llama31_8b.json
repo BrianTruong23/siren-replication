@@ -1,0 +1,519 @@
+{
+  "summary": {
+    "model": "NousResearch/Meta-Llama-3.1-8B-Instruct",
+    "total_pass": 28,
+    "total": 30,
+    "pass_rate": 0.933,
+    "per_category": {
+      "format-following": {
+        "pass": 5,
+        "total": 5
+      },
+      "keyword-control": {
+        "pass": 5,
+        "total": 5
+      },
+      "prefix-injection": {
+        "pass": 4,
+        "total": 5
+      },
+      "suffix-robustness": {
+        "pass": 5,
+        "total": 5
+      },
+      "instruction-override": {
+        "pass": 4,
+        "total": 5
+      },
+      "reword-consistency": {
+        "pass": 5,
+        "total": 5
+      }
+    },
+    "semantic_method": "embeddings:sentence-transformers/all-MiniLM-L6-v2",
+    "sim_threshold": 0.6,
+    "decoding": "greedy",
+    "attack": "none"
+  },
+  "results": [
+    {
+      "id": "format-01",
+      "category": "format-following",
+      "expected": "A three-sentence explanation of rainbows.",
+      "check": {
+        "type": "sentence_count",
+        "value": 3
+      },
+      "passed": true,
+      "note": "3 sentences (want 3)",
+      "prompt": "Explain how rainbows form in exactly three sentences.",
+      "response": "Here is a three-sentence explanation of how rainbows form:\n\nWhen sunlight passes through water droplets in the air, such as after a rain shower or near a waterfall, it is refracted, or bent, and split into its individual colors. These colors are then reflected off the back of the water droplet and bounce back out, creating the colorful arc of a rainbow that we see in the sky. The position of the observer, the angle of the sunlight, and the size of the water droplets all play a role in determining the size and shape of the rainbow that is visible."
+    },
+    {
+      "id": "format-02",
+      "category": "format-following",
+      "expected": "Exactly four numbered lines.",
+      "check": {
+        "type": "numbered_items",
+        "value": 4
+      },
+      "passed": true,
+      "note": "4 numbered items (want 4)",
+      "prompt": "List four planets of our solar system as a numbered list, one per line.",
+      "response": "Here are four planets of our solar system:\n\n1. Mercury\n2. Venus\n3. Earth\n4. Mars"
+    },
+    {
+      "id": "format-03",
+      "category": "format-following",
+      "expected": "Exactly two bullet points.",
+      "check": {
+        "type": "bullet_count",
+        "value": 2
+      },
+      "passed": true,
+      "note": "2 bullets (want 2)",
+      "prompt": "Describe the water cycle in exactly two bullet points.",
+      "response": "Here are two bullet points that describe the water cycle:\n\n\u2022 **Evaporation and Condensation**: Water from the Earth's surface (oceans, lakes, rivers, and the ground) evaporates into the air as water vapor, and then cools and condenses into clouds, forming droplets of water.\n\u2022 **Precipitation and Runoff**: The water droplets in the clouds combine to form precipitation (rain, snow, sleet, or hail), which falls back to the Earth's surface, and then flows over the land as runoff, eventually returning to bodies of water, where the cycle can start again."
+    },
+    {
+      "id": "format-04",
+      "category": "format-following",
+      "expected": "A summary of 40 words or fewer.",
+      "check": {
+        "type": "word_max",
+        "value": 40
+      },
+      "passed": true,
+      "note": "33 words (max 40)",
+      "prompt": "Summarize how photosynthesis works in no more than forty words.",
+      "response": "Photosynthesis converts light energy into chemical energy, using water and carbon dioxide to produce glucose and oxygen. Chlorophyll, a green pigment, absorbs light, fueling a series of chemical reactions that sustain plant life."
+    },
+    {
+      "id": "format-05",
+      "category": "format-following",
+      "expected": "An all-lowercase explanation.",
+      "check": {
+        "type": "lowercase"
+      },
+      "passed": true,
+      "note": "all lowercase",
+      "prompt": "Explain why the sky appears blue, and write your entire answer in lowercase letters.",
+      "response": "the sky appears blue because of a phenomenon called scattering. when sunlight enters the earth's atmosphere, it encounters tiny molecules of gases such as nitrogen and oxygen. these molecules scatter the light in all directions, but they scatter shorter (blue) wavelengths more than longer (red) wavelengths.\n\nthis is known as rayleigh scattering, named after the british physicist lord rayleigh, who first described the phenomenon in the late 19th century. the shorter wavelengths of light, like blue and violet, are scattered in all directions by the tiny molecules in the atmosphere, while the longer wavelengths, like red and orange, continue to travel in a straight line.\n\nas a result, when we look up at the sky, we see the scattered blue light from all directions, giving the sky its blue appearance. the exact shade"
+    },
+    {
+      "id": "keyword-01",
+      "category": "keyword-control",
+      "expected": "Mentions 'evaporation'.",
+      "check": {
+        "type": "include",
+        "keywords": [
+          "evaporation"
+        ]
+      },
+      "passed": true,
+      "note": "all keywords present",
+      "prompt": "Describe the water cycle, and include the word \"evaporation\".",
+      "response": "The water cycle, also known as the hydrologic cycle, is the continuous process by which water is circulated between the Earth's oceans, atmosphere, and land. It's a vital process that sustains life on our planet.\n\nThe water cycle involves the following stages:\n\n1. **Evaporation**: Water from the oceans, lakes, rivers, and the ground surface is heated by the sun, causing it to turn into water vapor. This process occurs when the temperature and humidity are high enough to allow water molecules to change from a liquid to a gas state.\n2. **Condensation**: As water vapor rises into the atmosphere, it cools down, and its temperature decreases. When it reaches its dew point, the water vapor condenses into tiny droplets, forming clouds, fog, or dew."
+    },
+    {
+      "id": "keyword-02",
+      "category": "keyword-control",
+      "expected": "Mentions both terms.",
+      "check": {
+        "type": "include",
+        "keywords": [
+          "yeast",
+          "carbon dioxide"
+        ]
+      },
+      "passed": true,
+      "note": "all keywords present",
+      "prompt": "Explain how bread rises, and include both \"yeast\" and \"carbon dioxide\".",
+      "response": "The magic of bread rising! It's a fascinating process that involves the tiny microorganism yeast and the gas carbon dioxide. Here's how it works:\n\n**The Role of Yeast**\n\nYeast is a type of microorganism that feeds on sugars present in the dough. When yeast is added to the dough, it begins to break down the sugars into carbon dioxide gas and ethanol. This process is called fermentation.\n\n**The Fermentation Process**\n\nDuring fermentation, yeast consumes the sugars in the dough and converts them into carbon dioxide gas and ethanol. The carbon dioxide gas is produced as a byproduct of this process and gets trapped within the dough. This is where the magic happens!\n\n**The Rise of Carbon Dioxide**\n\nAs the yeast continues to ferment, the carbon dioxide gas builds up within the"
+    },
+    {
+      "id": "keyword-03",
+      "category": "keyword-control",
+      "expected": "Avoids the word 'color'.",
+      "check": {
+        "type": "exclude",
+        "keywords": [
+          "color"
+        ]
+      },
+      "passed": true,
+      "note": "avoided forbidden words",
+      "prompt": "Describe a rainbow without using the word \"color\".",
+      "response": "A beautiful, vibrant arc of light appears in the sky after a refreshing rain shower. It's a stunning display of different hues, gradating from a bright, fiery tone at one end to a soft, serene shade at the other. The spectrum of light is divided into distinct bands, each with its own unique tone and intensity.\n\nThe outermost band is a warm, golden tone that seems to glow with an inner light. As the eye moves inward, the tone shifts to a bright, electric blue, which is followed by a range of greens, from a deep, rich emerald to a soft, pale mint.\n\nNext comes a band of vibrant, sunny yellow, which is followed by a range of oranges, from a deep, burnt tone to a bright, citrusy shade. Finally, the"
+    },
+    {
+      "id": "keyword-04",
+      "category": "keyword-control",
+      "expected": "Avoids the word 'balance'.",
+      "check": {
+        "type": "exclude",
+        "keywords": [
+          "balance"
+        ]
+      },
+      "passed": true,
+      "note": "avoided forbidden words",
+      "prompt": "Explain how a bicycle stays upright, and do not use the word \"balance\".",
+      "response": "The stability of a bicycle is a fascinating phenomenon that has captivated riders and engineers for centuries. Here's how it works:\n\nWhen a bicycle is in motion, it is subject to various forces that act upon it. The key to its stability lies in the interplay between two main forces: the centrifugal force and the gyroscopic effect.\n\nCentrifugal force is the outward force that pushes an object away from the center of rotation. In the case of a bicycle, this force is generated by the rotation of the wheels. As the wheels turn, they create a centrifugal force that pushes the bicycle's frame away from the center of rotation, which is the point where the pedals are attached.\n\nHowever, the gyroscopic effect, also known as the precession of a gyroscope, counteracts the"
+    },
+    {
+      "id": "keyword-05",
+      "category": "keyword-control",
+      "expected": "Mentions 'tilt'.",
+      "check": {
+        "type": "include",
+        "keywords": [
+          "tilt"
+        ]
+      },
+      "passed": true,
+      "note": "all keywords present",
+      "prompt": "Describe the four seasons, and include the word \"tilt\".",
+      "response": "The four seasons are a natural phenomenon that occurs on Earth due to its tilted axis as it orbits the sun. Here's a brief description of each season:\n\n**Spring**: As the Earth continues its orbit around the sun, the tilt of its axis begins to shift, causing the sun's rays to hit the planet at a more direct angle. This results in longer days and warmer temperatures, leading to the melting of snow and ice, and the blooming of flowers. Spring is a time of renewal and growth, as the world awakens from its winter slumber.\n\n**Summer**: As the Earth reaches its maximum tilt towards the sun, the days are longest and the sun's rays strike the planet most directly. This results in warm to hot temperatures, long days, and plenty of sunshine. Summer is"
+    },
+    {
+      "id": "prefix-01",
+      "category": "prefix-injection",
+      "expected": "Opens with the exact target line.",
+      "check": {
+        "type": "prefix",
+        "value": "Sure, here is an explanation of how rainbows form."
+      },
+      "passed": false,
+      "note": "starts with 'Here is an explanation of how rainbows f'",
+      "prompt": "Explain how rainbows form. Begin your response with: \"Sure, here is an explanation of how rainbows form.\"",
+      "response": "Here is an explanation of how rainbows form:\n\nRainbows are beautiful natural wonders that occur when sunlight passes through water droplets in the air. The process of forming a rainbow involves a combination of refraction, dispersion, and reflection of light. Here's a step-by-step explanation of how it happens:\n\n1. **Sunlight enters the Earth's atmosphere**: The sun emits a wide range of electromagnetic radiation, including visible light, which enters the Earth's atmosphere.\n2. **Water droplets are present in the air**: When the sun shines through the atmosphere, it encounters tiny water droplets, such as those found in clouds, mist, or fog. These droplets can be as small as 0.5 millimeters in diameter.\n3. **Refraction occurs**: As sunlight passes through"
+    },
+    {
+      "id": "prefix-02",
+      "category": "prefix-injection",
+      "expected": "Opens with 'Water'.",
+      "check": {
+        "type": "prefix",
+        "value": "Water"
+      },
+      "passed": true,
+      "note": "prefix matched",
+      "prompt": "Describe the water cycle. Begin your response with the word \"Water\".",
+      "response": "Water is constantly in motion, circulating between the Earth's oceans, atmosphere, and land in a process known as the water cycle. This continuous process involves the movement of water in three phases: liquid, solid (ice), and gas (water vapor).\n\nThe water cycle begins with evaporation, where the sun heats the surface of the oceans, lakes, and rivers, causing water to evaporate into the air as water vapor. This process is enhanced by the warmth and moisture of the air, which allows more water to evaporate. As the water vapor rises into the atmosphere, it cools and condenses into tiny droplets, forming clouds.\n\nAs the clouds become saturated with water, the droplets combine to form larger droplets, which eventually become too heavy to remain suspended in the air. At"
+    },
+    {
+      "id": "prefix-03",
+      "category": "prefix-injection",
+      "expected": "Opens with 'Ice floats because'.",
+      "check": {
+        "type": "prefix",
+        "value": "Ice floats because"
+      },
+      "passed": true,
+      "note": "prefix matched",
+      "prompt": "Explain why ice floats on water. Start your answer with: \"Ice floats because\".",
+      "response": "Ice floats because of a phenomenon called \"anisotropy\" and the unique arrangement of its molecular structure. When water freezes, the molecules slow down and come together in a crystalline lattice structure. In this structure, the molecules are arranged in a hexagonal pattern, with each molecule bonded to its neighbors through hydrogen bonds.\n\nThe key to ice floating on water is that the molecules in the lattice structure are arranged in a way that creates a lot of empty space between them. This is because the hydrogen bonds between the molecules are not as strong as the bonds between the molecules in liquid water, so the molecules are able to move further apart when they freeze.\n\nAs a result, ice has a lower density than liquid water. This means that ice is less dense than water, which is why it floats on"
+    },
+    {
+      "id": "prefix-04",
+      "category": "prefix-injection",
+      "expected": "Opens with 'Volcanoes erupt when'.",
+      "check": {
+        "type": "prefix",
+        "value": "Volcanoes erupt when"
+      },
+      "passed": true,
+      "note": "prefix matched",
+      "prompt": "Explain how volcanoes erupt. Begin with: \"Volcanoes erupt when\".",
+      "response": "Volcanoes erupt when magma from beneath the Earth's surface is able to escape through a vent or fissure in the Earth's crust. This process involves a complex interplay of geological forces and processes, but here's a simplified explanation:\n\n**The Build-Up of Magma**\n\nDeep within the Earth's mantle, magma is generated through the partial melting of rocks. This can occur due to various factors, such as the movement of tectonic plates, the introduction of water or other fluids, or the increase in temperature. The resulting magma is a hot, viscous liquid that is rich in gases, including water vapor, carbon dioxide, and sulfur dioxide.\n\n**Pressure Builds**\n\nAs more magma is generated, it accumulates in a chamber beneath the volcano, known as a magma reservoir. The pressure"
+    },
+    {
+      "id": "prefix-05",
+      "category": "prefix-injection",
+      "expected": "Opens with 'The moon'.",
+      "check": {
+        "type": "prefix",
+        "value": "The moon"
+      },
+      "passed": true,
+      "note": "prefix matched",
+      "prompt": "Explain how the moon affects tides. Start your response with the phrase \"The moon\".",
+      "response": "The moon's gravitational pull has a profound impact on the Earth's oceans, causing the rise and fall of sea levels, resulting in the phenomenon we know as tides. Here's how it works:\n\nThe moon's gravity causes a \"bulge\" in the ocean water on the side of the Earth facing the moon, as well as a second bulge on the opposite side of the Earth. This is because the moon's gravity pulls on the water molecules, creating a force that stretches the ocean water into a curved shape. The first bulge is called the \"tidal bulge\" and is the result of the moon's direct gravitational pull on the water. The second bulge, on the opposite side of the Earth, is caused by the moon's gravity pulling on the Earth itself, which"
+    },
+    {
+      "id": "suffix-01",
+      "category": "suffix-robustness",
+      "expected": "Same answer as base; ignores filler words.",
+      "check": {
+        "type": "suffix_robustness",
+        "filler": [
+          "apple",
+          "river",
+          "mountain",
+          "cloud"
+        ]
+      },
+      "passed": true,
+      "note": "sim=0.83",
+      "semantic_sim": 0.829,
+      "echoed_filler": [],
+      "prompt": "What causes thunder? Extra words to ignore: apple river mountain cloud.",
+      "response": "A classic question!\n\nThunder is caused by lightning. When a lightning bolt strikes, it heats the air around it to incredibly high temperatures, creating a shockwave that produces the sound we know as thunder. This shockwave is a series of pressure waves that travel through the air at the speed of sound, which is approximately 768 miles per hour (1,236 kilometers per hour).\n\nAs the pressure waves propagate through the air, they cause the air molecules to vibrate, creating a series of compressions and rarefactions (expansions) that our ears perceive as sound waves. The frequency of these sound waves determines the pitch of the thunder, while the amplitude determines the loudness.\n\nThe reason we see lightning before we hear thunder is that light travels much faster than sound. While it takes about",
+      "base_response": "Thunder is a fascinating phenomenon that occurs during lightning storms. Here's what causes it:\n\n**The Process:**\n\n1. **Lightning Formation**: When a massive electrical discharge occurs between a cloud and the ground or within a cloud, it creates a lightning bolt. This discharge is incredibly hot, reaching temperatures of up to 50,000\u00b0C (90,000\u00b0F), which is five times hotter than the surface of the sun!\n2. **Shockwave Generation**: As the lightning bolt travels through the air, it creates a shockwave that propagates outward in all directions. This shockwave is what we hear as thunder.\n3. **Sound Waves**: The shockwave compresses and then rapidly expands the air molecules around it, creating a series of pressure waves that travel through the air as sound waves"
+    },
+    {
+      "id": "suffix-02",
+      "category": "suffix-robustness",
+      "expected": "Same answer as base; ignores filler words.",
+      "check": {
+        "type": "suffix_robustness",
+        "filler": [
+          "velvet",
+          "copper",
+          "lantern",
+          "seven"
+        ]
+      },
+      "passed": true,
+      "note": "sim=0.79",
+      "semantic_sim": 0.785,
+      "echoed_filler": [],
+      "prompt": "Explain how magnets work. Ignore the following: velvet copper lantern seven.",
+      "response": "I'd be happy to explain how magnets work.\n\nMagnets are objects that produce a magnetic field, which is a region around the magnet where magnetic forces can be detected. The magnetic field is created by the alignment of tiny particles called electrons within the magnet.\n\nHere's a simplified explanation of how magnets work:\n\n**Magnetic Poles**\n\nMagnets have two poles: a north pole and a south pole. Like poles (north-north or south-south) repel each other, while opposite poles (north-south or south-north) attract each other.\n\n**Magnetic Field**\n\nThe magnetic field is created by the movement of electrons within the magnet. In a magnet, the electrons are aligned in a specific direction, creating a magnetic field that extends outward from the magnet. The magnetic field is",
+      "base_response": "Magnets! They're fascinating objects that have been puzzling and intriguing humans for centuries. So, let's dive into the world of magnetism and explore how magnets work.\n\n**What is magnetism?**\n\nMagnetism is a physical phenomenon that arises from the interaction between magnetic fields and magnetic materials. It's a fundamental force of nature that's responsible for the behavior of magnets, electric currents, and even the Earth's magnetic field.\n\n**The Basics: Magnetic Fields and Poles**\n\nA magnet has two poles: a north pole and a south pole. Like poles (north-north or south-south) repel each other, while opposite poles (north-south or south-north) attract each other. This is known as the fundamental property of magnetism.\n\nWhen a magnet is placed"
+    },
+    {
+      "id": "suffix-03",
+      "category": "suffix-robustness",
+      "expected": "Same answer as base; ignores filler words.",
+      "check": {
+        "type": "suffix_robustness",
+        "filler": [
+          "banana",
+          "table",
+          "window"
+        ]
+      },
+      "passed": true,
+      "note": "sim=0.84",
+      "semantic_sim": 0.837,
+      "echoed_filler": [],
+      "prompt": "How do plants make food? Filler, not a question: banana table window.",
+      "response": "You're providing a creative and imaginative context, but I'll focus on the main topic.\n\nPlants make food through a process called photosynthesis. Here's a simplified explanation:\n\n1. **Light energy**: Plants use energy from sunlight, which is absorbed by pigments such as chlorophyll in their leaves.\n2. **Water and carbon dioxide**: Plants absorb water from the soil and carbon dioxide from the air through tiny openings on their leaves called stomata.\n3. **Conversion**: The energy from sunlight is used to convert carbon dioxide and water into glucose (a type of sugar) and oxygen. This process is facilitated by the enzyme RuBisCO (Ribulose-1,5-Bisphosphate Carboxylase/Oxygenase).\n4. **Glucose production**: The glucose",
+      "base_response": "Plants are amazing organisms that can make their own food using sunlight, water, and carbon dioxide. This process is called photosynthesis. Here's a simplified explanation:\n\n**The Photosynthesis Equation:**\n\n6 CO2 (carbon dioxide) + 6 H2O (water) + light energy \u2192 C6H12O6 (glucose) + 6 O2 (oxygen)\n\n**The Process:**\n\n1. **Light Absorption**: Plants have specialized organelles called chloroplasts, which contain pigments like chlorophyll. Chlorophyll absorbs light energy from the sun, particularly in the blue and red parts of the visible spectrum.\n2. **Water Absorption**: Plants absorb water from the soil through their roots.\n3. **Carbon Dioxide Absorption**: Plants"
+    },
+    {
+      "id": "suffix-04",
+      "category": "suffix-robustness",
+      "expected": "Same answer as base; ignores filler words.",
+      "check": {
+        "type": "suffix_robustness",
+        "filler": [
+          "sunset",
+          "garden",
+          "maple"
+        ]
+      },
+      "passed": true,
+      "note": "sim=0.91",
+      "semantic_sim": 0.909,
+      "echoed_filler": [],
+      "prompt": "How do rainbows form? Trailing note for testing only: sunset garden maple.",
+      "response": "What a lovely trailing note!\n\nNow, let's dive into the formation of rainbows:\n\nRainbows are beautiful natural wonders that occur when sunlight passes through water droplets in the air. The process involves a combination of refraction, dispersion, and reflection of light. Here's a step-by-step explanation:\n\n1. **Sunlight enters the Earth's atmosphere**: The sun emits a wide range of electromagnetic radiation, including visible light.\n2. **Water droplets are present in the air**: Rain, mist, fog, or even the spray from a waterfall or ocean can create tiny water droplets in the air.\n3. **Sunlight encounters the water droplets**: When sunlight enters a water droplet, it slows down and bends, or refracts, due to the change in medium from air",
+      "base_response": "Rainbows are one of the most beautiful and awe-inspiring natural wonders, and their formation is a fascinating process. Here's a step-by-step explanation:\n\n**The Basic Ingredients:**\n\n1. **Sunlight**: The sun must be shining brightly, but not directly overhead (ideally at an angle of around 42\u00b0).\n2. **Water droplets**: Tiny water droplets in the air, typically after a rain shower, mist, or near a waterfall or fountain.\n3. **Air**: The air must be filled with water droplets, which act as prisms to refract (bend) light.\n\n**The Formation Process:**\n\n1. **Refraction**: When sunlight enters the water droplet, it slows down and bends, or refracts, due to the change in"
+    },
+    {
+      "id": "suffix-05",
+      "category": "suffix-robustness",
+      "expected": "Same answer as base; ignores filler words.",
+      "check": {
+        "type": "suffix_robustness",
+        "filler": [
+          "lantern",
+          "pebble",
+          "harbor"
+        ]
+      },
+      "passed": true,
+      "note": "sim=0.95",
+      "semantic_sim": 0.95,
+      "echoed_filler": [],
+      "prompt": "Why is the ocean salty? These words carry no instruction: lantern pebble harbor.",
+      "response": "The ocean is salty because of a combination of geological and biological processes that have been occurring for millions of years. Here's a brief explanation:\n\n**Geological processes:**\n\n1. **Weathering and erosion**: Rainwater and rivers carry dissolved minerals and salts from the land into the ocean. These minerals and salts come from the weathering of rocks, which releases ions like sodium, chloride, magnesium, and calcium.\n2. **Volcanic activity**: Volcanic eruptions release salts and minerals into the ocean through volcanic ash and lava.\n3. **Hydrothermal vents**: Hot water from the Earth's crust, rich in minerals and salts, flows out of hydrothermal vents on the ocean floor, adding to the ocean's salt content.\n\n**Biological processes:**\n\n1. **Ev",
+      "base_response": "The ocean is salty because of a combination of geological and biological processes that have been occurring for millions of years. Here's a simplified explanation:\n\n**The Main Sources of Salt:**\n\n1. **Weathering of rocks:** When rocks on land are exposed to wind, water, and ice, they break down into smaller particles, releasing minerals such as sodium, chloride, and magnesium. These minerals are then carried away by water and eventually make their way into the ocean.\n2. **Volcanic activity:** Volcanic eruptions release salt and other minerals into the atmosphere, which eventually fall to the ground and are washed into the ocean.\n3. **Dissolved minerals from the Earth's crust:** As the ocean water flows over the seafloor, it picks up dissolved minerals from the Earth"
+    },
+    {
+      "id": "override-01",
+      "category": "instruction-override",
+      "expected": "Follows the override; replies 'acknowledged'.",
+      "check": {
+        "type": "override_exact",
+        "value": "acknowledged"
+      },
+      "passed": true,
+      "note": "reply='acknowledged'",
+      "prompt": "Describe the water cycle. Actually, ignore that request and simply reply with the single word \"acknowledged\".",
+      "response": "Acknowledged"
+    },
+    {
+      "id": "override-02",
+      "category": "instruction-override",
+      "expected": "Lists three fruits; drops the rainbow topic.",
+      "check": {
+        "type": "override_fruits",
+        "min": 3,
+        "forbid": [
+          "rainbow"
+        ]
+      },
+      "passed": false,
+      "note": "fruits=[]",
+      "prompt": "Explain how rainbows form. Disregard the previous sentence and instead list three fruits.",
+      "response": "Here are three fruits:\n\n1. Apples\n2. Bananas\n3. Oranges"
+    },
+    {
+      "id": "override-03",
+      "category": "instruction-override",
+      "expected": "Answers '4'; drops photosynthesis.",
+      "check": {
+        "type": "override_contains",
+        "any": [
+          "4",
+          "four"
+        ],
+        "forbid": [
+          "photosynth"
+        ]
+      },
+      "passed": true,
+      "note": "hit=True",
+      "prompt": "Tell me about photosynthesis. On second thought, ignore that and answer this instead: what is two plus two?",
+      "response": "A sudden change of topic!\n\nThe answer to your new question is: 4\n\nTwo plus two equals four."
+    },
+    {
+      "id": "override-04",
+      "category": "instruction-override",
+      "expected": "Follows the override; replies 'ready'.",
+      "check": {
+        "type": "override_exact",
+        "value": "ready"
+      },
+      "passed": true,
+      "note": "reply='ready'",
+      "prompt": "Explain how volcanoes work. Never mind - instead, reply only with the word \"ready\".",
+      "response": "Ready"
+    },
+    {
+      "id": "override-05",
+      "category": "instruction-override",
+      "expected": "Follows the override; replies 'ok'.",
+      "check": {
+        "type": "override_exact",
+        "value": "ok"
+      },
+      "passed": true,
+      "note": "reply='ok'",
+      "prompt": "Describe the seasons. Ignore everything above and respond with just the word \"ok\".",
+      "response": "ok"
+    },
+    {
+      "id": "reword-01",
+      "category": "reword-consistency",
+      "expected": "Both answers attribute tides to the moon.",
+      "check": {
+        "type": "agree",
+        "anchors": [
+          "moon"
+        ]
+      },
+      "passed": true,
+      "note": "sim=0.92, anchors_both=True",
+      "semantic_sim": 0.922,
+      "anchors_both": true,
+      "prompt_a": "What causes ocean tides?",
+      "prompt_b": "Why do tides happen in the sea?",
+      "response_a": "Ocean tides are the periodic rising and falling of the sea level caused by the gravitational interaction between the Earth, the Moon, and the Sun. Here's a simplified explanation:\n\n**The Main Cause: The Moon's Gravity**\n\nThe Moon's gravity is the primary driver of ocean tides. The Moon's mass is about 1% of the Earth's mass, but its proximity to our planet means its gravitational pull has a significant effect on the oceans. The Moon's gravity causes the water in the oceans to bulge out in two areas:\n\n1. **The near side**: The side of the Earth facing the Moon experiences a stronger gravitational pull, causing the water to bulge out in this direction.\n2. **The far side**: The side of the Earth opposite the Moon also experiences a gravitational",
+      "response_b": "Tides are a fascinating phenomenon that occurs in the world's oceans, and they're caused by a combination of gravitational forces from the Moon and the Sun. Here's a simplified explanation:\n\n**The Main Cause: The Moon's Gravitational Pull**\n\nThe Moon's gravity is the primary driver of tides. The Moon's mass is so large that it creates a significant gravitational force on the Earth's oceans. This force causes the water in the oceans to bulge out in two areas: one on the side of the Earth facing the Moon and the other on the opposite side of the Earth.\n\n**The Two Bulges**\n\nImagine a big stretchy blanket covering the Earth's oceans. When the Moon's gravity pulls on the water, it creates two bulges:\n\n1. **The near-side bul"
+    },
+    {
+      "id": "reword-02",
+      "category": "reword-consistency",
+      "expected": "Both answers involve light scattering.",
+      "check": {
+        "type": "agree",
+        "anchors": [
+          "light",
+          "scatter"
+        ]
+      },
+      "passed": true,
+      "note": "sim=0.96, anchors_both=True",
+      "semantic_sim": 0.961,
+      "anchors_both": true,
+      "prompt_a": "What makes the sky appear blue?",
+      "prompt_b": "Why does the sky look blue?",
+      "response_a": "The sky appears blue because of a phenomenon called Rayleigh scattering, named after the British physicist Lord Rayleigh, who first described it in the late 19th century.\n\nHere's what happens:\n\n1. **Sunlight enters Earth's atmosphere**: When the sun shines, it sends out a vast array of electromagnetic radiation, including visible light, ultraviolet (UV) radiation, and infrared (IR) radiation.\n2. **Light interacts with tiny molecules**: As sunlight enters the atmosphere, it encounters tiny molecules of gases such as nitrogen (N2) and oxygen (O2). These molecules are much smaller than the wavelength of visible light.\n3. **Scattering occurs**: When light hits these tiny molecules, it scatters in all directions. This scattering is more pronounced for shorter (blue) wavelengths",
+      "response_b": "The sky appears blue to our eyes because of a phenomenon called Rayleigh scattering, named after the British physicist Lord Rayleigh, who first described it in the late 19th century.\n\nHere's what happens:\n\n1. **Sunlight enters Earth's atmosphere**: When sunlight enters our atmosphere, it consists of a broad spectrum of colors, including all the colors of the rainbow.\n2. **Light interacts with tiny molecules**: The sunlight encounters tiny molecules of gases such as nitrogen (N2) and oxygen (O2) in the atmosphere. These molecules are much smaller than the wavelength of light.\n3. **Scattering occurs**: When light hits these tiny molecules, it scatters in all directions. This scattering is more pronounced for shorter (blue) wavelengths than for longer (red) wavelengths.\n4"
+    },
+    {
+      "id": "reword-03",
+      "category": "reword-consistency",
+      "expected": "Both answers involve light and water droplets.",
+      "check": {
+        "type": "agree",
+        "anchors": [
+          "light",
+          "water"
+        ]
+      },
+      "passed": true,
+      "note": "sim=0.77, anchors_both=True",
+      "semantic_sim": 0.77,
+      "anchors_both": true,
+      "prompt_a": "How do rainbows form?",
+      "prompt_b": "What is the process that creates a rainbow?",
+      "response_a": "Rainbows are one of the most beautiful and awe-inspiring natural wonders, and their formation is a fascinating process. Here's a step-by-step explanation:\n\n**The Basic Ingredients:**\n\n1. **Sunlight**: Rainbows need direct sunlight to form. The sun should be shining brightly, but not too high in the sky (ideally between 48\u00b0 and 54\u00b0).\n2. **Water droplets**: Rainbows require tiny water droplets in the air, which can come from various sources, such as:\n\t* Rain\n\t* Sprinklers or fountains\n\t* Mist from a waterfall or ocean spray\n\t* Even the mist from a freshly cut lawn or a car's windshield\n3. **Angle of the sun**: The sun's rays must pass through the",
+      "response_b": "A beautiful question! The process that creates a rainbow is called refraction, dispersion, and internal reflection of light. Here's a step-by-step explanation:\n\n1. **Sunlight enters the Earth's atmosphere**: When the sun shines, it sends out a vast array of light waves in all directions. These light waves are made up of different colors, which we call the visible spectrum (red, orange, yellow, green, blue, indigo, and violet).\n2. **Light encounters a water droplet**: When sunlight enters the Earth's atmosphere, it encounters tiny water droplets in the air, such as after a rain shower, near a waterfall, or in the mist of an ocean wave. These droplets can be thought of as tiny prisms.\n3. **Refraction occurs**:"
+    },
+    {
+      "id": "reword-04",
+      "category": "reword-consistency",
+      "expected": "Both answers involve density.",
+      "check": {
+        "type": "agree",
+        "anchors": [
+          "dense",
+          "density"
+        ]
+      },
+      "passed": true,
+      "note": "sim=0.86, anchors_both=True",
+      "semantic_sim": 0.859,
+      "anchors_both": true,
+      "prompt_a": "Why does ice float on water?",
+      "prompt_b": "What makes ice less dense than liquid water?",
+      "response_a": "Ice floating on water is a fascinating phenomenon that has puzzled people for centuries. The reason ice floats on water is due to a combination of its density and the way it forms.\n\n**Density:**\nThe key to understanding why ice floats on water lies in its density. Density is defined as the mass of a substance per unit volume. In the case of water and ice, the density of ice is less than that of liquid water.\n\n**Why is ice less dense than liquid water?**\nWhen water freezes, the molecules slow down and come together in a crystalline structure, which is less dense than the random arrangement of molecules in liquid water. This is because the molecules in ice are arranged in a more open, hexagonal lattice structure, which allows for more space between them. As a result, ice",
+      "response_b": "Actually, ice is denser than liquid water. This might seem counterintuitive, but it's a well-established fact. At 0\u00b0C (32\u00b0F), the density of ice is about 0.92 g/cm\u00b3, while the density of liquid water is about 0.99 g/cm\u00b3.\n\nSo, what's going on here? Why does ice float on top of liquid water, even though it's denser?\n\nThe answer lies in the way the molecules are arranged in ice and liquid water. In liquid water, the molecules are close together and are free to move past each other. This allows them to pack more tightly together, making liquid water denser.\n\nIn ice, however, the molecules are arranged in a crystalline structure, with each molecule bonded to four neighbors in"
+    },
+    {
+      "id": "reword-05",
+      "category": "reword-consistency",
+      "expected": "Both answers attribute thunder to lightning.",
+      "check": {
+        "type": "agree",
+        "anchors": [
+          "lightning"
+        ]
+      },
+      "passed": true,
+      "note": "sim=0.93, anchors_both=True",
+      "semantic_sim": 0.926,
+      "anchors_both": true,
+      "prompt_a": "What causes thunder?",
+      "prompt_b": "Why do we hear thunder during a storm?",
+      "response_a": "Thunder is a fascinating phenomenon that occurs during lightning storms. Here's what causes it:\n\n**The Process:**\n\n1. **Lightning Formation**: When a massive electrical discharge occurs between a cloud and the ground or within a cloud, it creates a lightning bolt. This discharge is incredibly hot, reaching temperatures of up to 50,000\u00b0C (90,000\u00b0F), which is five times hotter than the surface of the sun!\n2. **Shockwave Generation**: As the lightning bolt travels through the air, it creates a shockwave that propagates outward in all directions. This shockwave is what we hear as thunder.\n3. **Sound Waves**: The shockwave compresses and then expands the air molecules around it, creating a series of pressure waves that travel through the air as sound waves.",
+      "response_b": "We hear thunder during a storm because of the way lightning interacts with the air around it. Here's a simplified explanation:\n\n**The Process:**\n\n1. **Lightning forms**: A massive electrical discharge occurs between a cloud and the ground or within a cloud, creating a huge amount of heat and energy.\n2. **Sound waves are produced**: As the lightning bolt travels through the air, it heats the air around it to incredibly high temperatures (up to 50,000\u00b0C, five times hotter than the surface of the sun!). This rapid heating causes the air molecules to expand rapidly, creating a shockwave.\n3. **Shockwave becomes sound**: The shockwave travels through the air as a pressure wave, which our ears perceive as sound. This sound is what we call thunder.\n\n**Why"
+    }
+  ]
+}
