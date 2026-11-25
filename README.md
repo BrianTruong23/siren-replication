@@ -4,6 +4,33 @@ Local, white-box prompt/suffix search based on [Sirens’ Whisper, arXiv:2603.13
 
 **This is an approximation, not an exact replication or a verified jailbreak.** It produces candidate prompts and responses; a low optimization loss is not evidence that a model's safeguards were bypassed. The included task and template are benign smoke-test fixtures, not the paper's attack templates or dataset.
 
+## Member 1 deliverable — harmless prompt library & baseline
+
+A documented library of **30 harmless prompts** (6 categories × 5) that measure
+**instruction-following** and **response consistency** on authorized models, plus clean
+baselines across three models. No attack content; prompts are benign and TTS-ready.
+Full write-up and data: **[`deliverable/`](deliverable/)**.
+
+| Document | What it is |
+|---|---|
+| [deliverable/README.md](deliverable/README.md) | Overview + how to reproduce |
+| [1_prompt_library.md](deliverable/1_prompt_library.md) | **(A)** the 30 prompts, by category |
+| [2_expected_criteria.md](deliverable/2_expected_criteria.md) | **(B)** pass rule per category |
+| [3_baseline_observations.md](deliverable/3_baseline_observations.md) | **(C)** methodology + findings |
+| [result_cards/](deliverable/result_cards/) | one scorecard per model |
+
+Baseline pass rates (clean, greedy, no attack; semantic categories scored with `all-MiniLM-L6-v2`):
+
+| Model | Overall | format | keyword | prefix | suffix | override | reword |
+|---|---|---|---|---|---|---|---|
+| [Llama-3.1-8B](deliverable/result_cards/meta-llama-3.1-8b-instruct.md) (ungated mirror) | **28/30 (93%)** | 5/5 | 5/5 | 4/5 | 5/5 | 4/5 | 5/5 |
+| [Mistral-7B-v0.3](deliverable/result_cards/mistral-7b-instruct-v0.3.md) | **25/30 (83%)** | 5/5 | 5/5 | 5/5 | 5/5 | 1/5 | 4/5 |
+| [Qwen2.5-0.5B](deliverable/result_cards/qwen2.5-0.5b-instruct.md) | **21/30 (70%)** | 2/5 | 3/5 | 2/5 | 5/5 | 4/5 | 5/5 |
+| [Gemma-3-4B](deliverable/result_cards/gemma-3-4b-it.md) | not run (gated) | — | — | — | — | — | — |
+
+Reproduce: `python scripts/run_baseline.py --model <HF_ID> --out runs/baseline_<name>.json`
+then `python scripts/make_deliverable.py`. Requires the `eval` extra (`pip install -e .[eval]`).
+
 ## Install
 
 Python 3.10+, PyTorch-compatible GPU recommended. Install a CUDA-compatible PyTorch build for your machine, then:
