@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "swhisper-stage1"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = ["torch>=2.2", "transformers>=4.45,<5", "accelerate>=0.34", "sentencepiece>=0.2"]
+
+[project.optional-dependencies]
+# Baseline evaluation harness (Member 1 deliverable): semantic scoring for the
+# suffix-robustness and reword-consistency categories. Optional — run_baseline.py
+# falls back to a lexical proxy if absent (--embed-model none).
+eval = ["sentence-transformers>=3,<7"]
+
+[project.scripts]
+swhisper-stage1 = "swhisper_stage1:main"
+
+[tool.setuptools]
+py-modules = ["swhisper_stage1"]
